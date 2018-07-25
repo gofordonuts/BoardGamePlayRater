@@ -14,6 +14,7 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var gameImageView: UIImageView!
     @IBOutlet weak var gameLabel: UILabel!
     @IBOutlet weak var gameRatingLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     var imagePicker = UIImagePickerController()
     var game : Game? = nil
@@ -23,14 +24,27 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
 
         // Do any additional setup after loading the view.
         imagePicker.delegate = self
-        
+        deleteButton.isHidden = true
+        self.navigationItem.rightBarButtonItem = editButtonItem
         if game != nil {
             // gameImageView.image = UIImage(data: game!.image! as! Data)
+            
+            // Add style to gameLabel:
             gameLabel.text = game!.name
-            gameLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            
+            //gameLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             //gameLabel.layer.borderColor = UIColor.black.cgColor
             //gameLabel.layer.borderWidth = 1.0
+            
+            // Add drop shadow to gameRatingLabel:
+            gameRatingLabel.layer.shadowColor = UIColor.black.cgColor
+            gameRatingLabel.layer.shadowRadius = 3.0
+            gameRatingLabel.layer.shadowOpacity = 1.0
+            gameRatingLabel.layer.shadowOffset = CGSize(width: 4, height: 4)
+            gameRatingLabel.layer.masksToBounds = false
+            
             ratingColor(rating: game!.rating)
+            
             if game!.rating <= 10.0 {
                 gameRatingLabel.text = String(game!.rating)
             } else {
@@ -84,12 +98,28 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        if (editing) {
+            // user just tapped the Edit button (it now says Done)
+            deleteButton.isHidden = false
+        } else {
+            // user just tapped the Done button (it now says Edit)
+            deleteButton.isHidden = true
+        }
     }
     
-
+    @IBAction func deleteTapped(_ sender: Any) {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.delete(game!)
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
