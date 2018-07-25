@@ -42,11 +42,75 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="FDZ-0f-21P" id="DrL-EE-RN2"/>
+                        <segue destination="8M7-Se-jVU" kind="show" identifier="PresentPlayTrackerSegue" id="8VH-cf-pde"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="856.79999999999995" y="145.27736131934034"/>
+        </scene>
+        <!--Play Tracker View Controller-->
+        <scene sceneID="mFy-EP-PMi">
+            <objects>
+                <viewController id="8M7-Se-jVU" customClass="PlayTrackerViewController" customModule="BoardGamePlayRater" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rrK-wq-VtA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VGR-Fe-4s2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="160"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmK-6W-L1n">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <color key="backgroundColor" red="0.92982917750000005" green="0.92982917750000005" blue="0.92982917750000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ZmK-6W-L1n" firstAttribute="centerX" secondItem="VGR-Fe-4s2" secondAttribute="centerX" id="mDi-fO-ALh"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOi-x9-JM9">
+                                <rect key="frame" x="30" y="214" width="90" height="40"/>
+                                <color key="backgroundColor" red="0.92982917750000005" green="0.92982917750000005" blue="0.92982917750000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="GPl-6Z-in0"/>
+                                    <constraint firstAttribute="width" constant="90" id="uYS-kW-KnA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Boardgame Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYT-LA-wuJ">
+                                <rect key="frame" x="90.5" y="174" width="195.5" height="28"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <edgeInsets key="layoutMargins" top="10" left="10" bottom="10" right="10"/>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="VGR-Fe-4s2" secondAttribute="trailing" id="5VP-fR-eAz"/>
+                            <constraint firstItem="sYT-LA-wuJ" firstAttribute="top" secondItem="VGR-Fe-4s2" secondAttribute="bottom" constant="-50" id="9EE-0h-HSY"/>
+                            <constraint firstItem="VGR-Fe-4s2" firstAttribute="leading" secondItem="rrK-wq-VtA" secondAttribute="leading" id="WmM-O4-FgZ"/>
+                            <constraint firstItem="hOi-x9-JM9" firstAttribute="leading" secondItem="xi1-03-jx7" secondAttribute="leading" constant="30" id="atM-ir-Csl"/>
+                            <constraint firstItem="VGR-Fe-4s2" firstAttribute="centerX" secondItem="sYT-LA-wuJ" secondAttribute="centerX" id="bof-Ce-pNt"/>
+                            <constraint firstItem="hOi-x9-JM9" firstAttribute="top" secondItem="ZmK-6W-L1n" secondAttribute="bottom" constant="-10" id="pSA-js-vYN"/>
+                            <constraint firstAttribute="bottom" secondItem="VGR-Fe-4s2" secondAttribute="bottom" constant="443" id="qzG-or-BDo"/>
+                            <constraint firstItem="VGR-Fe-4s2" firstAttribute="top" secondItem="xi1-03-jx7" secondAttribute="top" id="wae-ol-vbg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xi1-03-jx7"/>
+                    </view>
+                    <connections>
+                        <outlet property="gameImageView" destination="ZmK-6W-L1n" id="Ieg-fp-mop"/>
+                        <outlet property="gameLabel" destination="sYT-LA-wuJ" id="K5d-V0-BeN"/>
+                        <outlet property="gameRatingLabel" destination="hOi-x9-JM9" id="pvu-jj-O4m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HZV-eI-GPz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="679.20000000000005" y="1006.1469265367317"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="aaS-ib-0xN">

@@ -40,7 +40,7 @@ class GameViewController: UIViewController {
                 
                 let game = Game(context: context)
                 game.name = nameTextField.text
-                
+                game.rating = 11.0  
             } else {
                 
                 // If user has not provided board game name, present alert:

@@ -48,9 +48,16 @@ class GameListViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let game = games[indexPath.row]
+        self.performSegue(withIdentifier: "PresentPlayTrackerSegue", sender: game)
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PresentPlayTrackerSegue" {
+            let nextVC = segue.destination as! PlayTrackerViewController
+            nextVC.game = sender as? Game
+        }
+    }
+
 }
 
