@@ -25,11 +25,22 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         // Do any additional setup after loading the view.
         imagePicker.delegate = self
         deleteButton.isHidden = true
+        
         self.navigationItem.rightBarButtonItem = editButtonItem
+        
+        /* color for text dropshadow
+        gameLabel.layer.masksToBounds = false
+        gameLabel.layer.shadowRadius = 2.0
+        gameLabel.layer.shadowOpacity = 1
+        gameLabel.layer.shadowColor = UIColor.red.cgColor
+        gameLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+        */
+        
         if game != nil {
-            // gameImageView.image = UIImage(data: game!.image! as! Data)
+            gameImageView.image = UIImage(data: game!.image! as! Data)
             
             // Add style to gameLabel:
+            gameLabel.backgroundColor = UIColor.white
             gameLabel.text = game!.name
             
             //gameLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
