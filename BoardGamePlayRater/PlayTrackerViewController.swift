@@ -12,9 +12,9 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
 
     
     @IBOutlet weak var gameImageView: UIImageView!
-    @IBOutlet weak var gameLabel: UILabel!
     @IBOutlet weak var gameRatingLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var trackGamePlayButton: UIButton!
     
     var imagePicker = UIImagePickerController()
     var game : Game? = nil
@@ -25,28 +25,20 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         // Do any additional setup after loading the view.
         imagePicker.delegate = self
         deleteButton.isHidden = true
+        trackGamePlayButton.isHidden = false
+        
+        trackGamePlayButton.layer.borderWidth = 1.0
+        trackGamePlayButton.layer.borderColor = UIColor.blue.cgColor
+        trackGamePlayButton.layer.cornerRadius = 8.0
         
         self.navigationItem.rightBarButtonItem = editButtonItem
         
-        /* color for text dropshadow
-        gameLabel.layer.masksToBounds = false
-        gameLabel.layer.shadowRadius = 2.0
-        gameLabel.layer.shadowOpacity = 1
-        gameLabel.layer.shadowColor = UIColor.red.cgColor
-        gameLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
-        */
-        
         if game != nil {
-            gameImageView.image = UIImage(data: game!.image! as! Data)
+            gameImageView.image = UIImage(data: game!.image! )
+            gameImageView.contentMode = .scaleAspectFill
+            gameImageView.clipsToBounds = true
             
-            // Add style to gameLabel:
-            gameLabel.backgroundColor = UIColor.white
-            gameLabel.text = game!.name
-            
-            //gameLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-            //gameLabel.layer.borderColor = UIColor.black.cgColor
-            //gameLabel.layer.borderWidth = 1.0
-            
+            self.title = game!.name
             // Add drop shadow to gameRatingLabel:
             gameRatingLabel.layer.shadowColor = UIColor.black.cgColor
             gameRatingLabel.layer.shadowRadius = 3.0
@@ -117,9 +109,11 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         if (editing) {
             // user just tapped the Edit button (it now says Done)
             deleteButton.isHidden = false
+            trackGamePlayButton.isHidden = true
         } else {
             // user just tapped the Done button (it now says Edit)
             deleteButton.isHidden = true
+            trackGamePlayButton.isHidden = false
         }
     }
     
@@ -130,7 +124,19 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         
         navigationController?.popViewController(animated: true)
     }
-    
+    /*
+    @IBAction func trackGamePlayButtonTapped(_ sender: Any) {
+        self.performSegue(withIdentifier: "TrackPlaySegue", sender: game)
+    }
+    */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TrackPlaySegue" {
+            
+            let nextVC = segue.destination as! PlayRecordViewController
+            nextVC.game = game
+        }
+
+    }
     /*
     // MARK: - Navigation
 
