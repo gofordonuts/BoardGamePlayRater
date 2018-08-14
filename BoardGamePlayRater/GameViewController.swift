@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  BoardGamePlayRater
 //
-//  Created by William Beutel on 7/20/18.
+//  Created by Maria Beutel on 7/20/18.
 //  Copyright © 2018 Maria Beutel. All rights reserved.
 //
 
@@ -16,9 +16,13 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var maxPlayerCountTextField: UITextField!
     @IBOutlet weak var titleStackView: UIStackView!
     @IBOutlet weak var countStackView: UIStackView!
+    @IBOutlet weak var initialRatingStackView: UIStackView!
+    @IBOutlet weak var initialRatingLabel: UITextField!
     
     var imagePicker = UIImagePickerController()
     var game : Game? = nil
+    
+    var imageSetByUser = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,8 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         titleStackView.isLayoutMarginsRelativeArrangement = true
         countStackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         countStackView.isLayoutMarginsRelativeArrangement = true
+        initialRatingStackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        initialRatingStackView.isLayoutMarginsRelativeArrangement = true
         
         if game != nil {
             nameTextField.text = game!.name
@@ -116,14 +122,23 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 if !(minPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
                     game.minPlayerCount = Int16(minPlayerCountTextField.text!)!
                 } else {
-                    game.minPlayerCount = 0
+                    game.minPlayerCount = 1
                 }
+                
                 if !(maxPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
                     game.maxPlayerCount = Int16(maxPlayerCountTextField.text!)!
                 } else {
-                    game.maxPlayerCount = 0
+                    game.maxPlayerCount = 100
                 }
-                game.image = UIImagePNGRepresentation(gameImageView.image!)
+                if imageSetByUser {
+                    game.image = UIImagePNGRepresentation(gameImageView.image!)
+                } else {
+                    game.image = nil
+                }
+                
+                if initialRatingLabel.text != "Not required..." {
+                    game.rating = 5.0
+                }
             
             } else {
                 
@@ -148,6 +163,7 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         gameImageView.image = image
         gameImageView.contentMode = .scaleAspectFill
         gameImageView.clipsToBounds = true
+        imageSetByUser = true
         imagePicker.dismiss(animated: true, completion: nil)
     }
 

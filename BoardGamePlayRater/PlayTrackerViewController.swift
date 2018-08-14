@@ -2,7 +2,7 @@
 //  PlayTrackerViewController.swift
 //  BoardGamePlayRater
 //
-//  Created by William Beutel on 7/22/18.
+//  Created by Maria Beutel on 7/22/18.
 //  Copyright © 2018 Maria Beutel. All rights reserved.
 //
 
@@ -34,7 +34,9 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         self.navigationItem.rightBarButtonItem = editButtonItem
         
         if game != nil {
-            gameImageView.image = UIImage(data: game!.image! )
+            if game!.image != nil {
+                gameImageView.image = UIImage(data: game!.image! )
+            }
             gameImageView.contentMode = .scaleAspectFill
             gameImageView.clipsToBounds = true
             
@@ -46,7 +48,11 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
             gameRatingLabel.layer.shadowOffset = CGSize(width: 4, height: 4)
             gameRatingLabel.layer.masksToBounds = false
             
-            ratingColor(rating: game!.rating)
+            let colorValue = getRatingColor(rating: game!.rating)
+            gameRatingLabel.backgroundColor = colorValue
+            gameImageView.backgroundColor = colorValue.withAlphaComponent(0.5)
+            // ratingColor(rating: game!.rating)
+            
             
             if game!.rating <= 10.0 {
                 gameRatingLabel.text = String(game!.rating)
@@ -60,48 +66,35 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
 
-    func ratingColor(rating : Double) {
+    func getRatingColor(rating : Double) -> UIColor {
+        var color : UIColor
         if  rating >= 0.0 && rating < 1.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 204/255, green: 0, blue: 0, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 204/255, green: 0, blue: 0, alpha: 0.5)
+            color = UIColor(red: 204/255, green: 0, blue: 0, alpha: 1)
         } else if rating >= 1.0 && rating < 2.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+            color = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
         } else if rating >= 2.0 && rating < 3.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 1, green: 51/255, blue: 153/255, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 1, green: 51/255, blue: 153/255, alpha: 0.5)
+            color = UIColor(red: 1, green: 51/255, blue: 153/255, alpha: 1)
         } else if rating >= 3.0 && rating < 4.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 1, green: 153/255, blue: 1, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 1, green: 153/255, blue: 1, alpha: 0.5)
+            color = UIColor(red: 1, green: 153/255, blue: 1, alpha: 1)
         } else if rating >= 4.0 && rating < 5.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 153/255, green: 153/255, blue: 1, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 153/255, green: 153/255, blue: 1, alpha: 0.5)
+            color = UIColor(red: 153/255, green: 153/255, blue: 1, alpha: 1)
         } else if rating >= 5.0 && rating < 6.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 204/255, green: 153/255, blue: 1, alpha: 1)
-             gameImageView.backgroundColor = UIColor(red: 204/255, green: 153/255, blue: 1, alpha: 0.5)
+            color = UIColor(red: 204/255, green: 153/255, blue: 1, alpha: 1)
         } else if rating >= 6.0 && rating < 7.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 153/255, green: 1, blue: 1, alpha: 1)
-             gameImageView.backgroundColor = UIColor(red: 153/255, green: 1, blue: 1, alpha: 0.5)
+            color = UIColor(red: 153/255, green: 1, blue: 1, alpha: 1)
         } else if rating >= 7.0 && rating < 8.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 153/255, green: 1, blue: 153/255, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 153/255, green: 1, blue: 153/255, alpha: 0.5)
+            color = UIColor(red: 153/255, green: 1, blue: 153/255, alpha: 1)
         } else if rating >= 8.0 && rating < 9.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 102/255, green: 204/255, blue: 102, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 102/255, green: 204/255, blue: 102, alpha: 0.5)
+            color = UIColor(red: 102/255, green: 204/255, blue: 102, alpha: 1)
         } else if rating >= 9.0 && rating < 10.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 0, green: 204, blue: 0, alpha: 1)
-            gameImageView.backgroundColor = UIColor(red: 0, green: 204, blue: 0, alpha: 0.5)
+            color = UIColor(red: 0, green: 204, blue: 0, alpha: 1)
         } else if rating == 10.0 {
-            gameRatingLabel.backgroundColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
-             gameImageView.backgroundColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
+            color = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
         } else {
-            gameRatingLabel.backgroundColor = UIColor.lightGray
-            gameImageView.backgroundColor = UIColor.lightGray
+            color = UIColor.lightGray
         }
+        return color
     }
-    
-    
-
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)

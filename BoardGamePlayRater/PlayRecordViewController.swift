@@ -2,7 +2,7 @@
 //  PlayRecordViewController.swift
 //  BoardGamePlayRater
 //
-//  Created by William Beutel on 7/29/18.
+//  Created by Maria Beutel on 7/29/18.
 //  Copyright © 2018 Maria Beutel. All rights reserved.
 //
 
@@ -18,6 +18,9 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var gameImageView: UIImageView!
     
     @IBOutlet weak var playerCountPickerView: UIPickerView!
+    @IBOutlet weak var playDatePickerView: UIDatePicker!
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +48,18 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func doneTapped(_ sender: Any) {
+        
+        // Save game play here:
+        let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
+        let playDate = playDatePickerView.date
+        
+        print("Player Count = \(playerCount)")
+        print("Play date = \(playDate)")
+        
+        
         self.dismiss(animated: true) {
             //dismiss code goes here
+            
         }
     }
     
@@ -105,7 +118,25 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
      present(imagePicker, animated: true, completion: nil)
      */
      
+ /*********** PLAYER COUNT PICKER VIEW SETUP **************/
  
+    
+    
+ /*
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "<Your Font Name>", size: <Font Size>)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = <Data Array>[row]
+        pickerLabel?.textColor = UIColor.blue
+        
+        return pickerLabel!
+    }
+ */
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -118,6 +149,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(game!.minPlayerCount + Int16(row))
     }
+
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
