@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myProtoCell" id="QiY-PY-TZC" customClass="GameTableViewCell" customModule="BoardGamePlayRater" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="gameProtoCell" id="QiY-PY-TZC" customClass="GameTableViewCell" customModule="BoardGamePlayRater" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QiY-PY-TZC" id="BHo-D0-6xS">
@@ -206,7 +207,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8y-4w-eBW">
-                                <rect key="frame" x="169" y="587" width="37" height="30"/>
+                                <rect key="frame" x="169" y="607" width="37" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hDR-vD-PsI"/>
+                                </constraints>
                                 <state key="normal" title="Done"/>
                                 <connections>
                                     <action selector="doneTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="HV8-1Q-0te"/>
@@ -228,16 +232,96 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cHw-50-v1k">
-                                <rect key="frame" x="0.0" y="284.5" width="375" height="282.5"/>
+                                <rect key="frame" x="0.0" y="284.5" width="375" height="302.5"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4RC-5T-IlN">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="302.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dateLabelProtoCell" rowHeight="274" id="uJf-0M-PpB" customClass="DateLabelTableViewCell" customModule="BoardGamePlayRater" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="274"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uJf-0M-PpB" id="HDn-1Q-0RU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="273.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5WC-o8-YxT">
+                                                            <rect key="frame" x="15" y="11" width="345" height="216"/>
+                                                            <subviews>
+                                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="3Qh-vh-eLh">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="216"/>
+                                                                    <date key="date" timeIntervalSinceReferenceDate="556050293.21527803">
+                                                                        <!--2018-08-15 18:24:53 +0000-->
+                                                                    </date>
+                                                                </datePicker>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="3Qh-vh-eLh" secondAttribute="bottom" id="4bo-hd-Czx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="3Qh-vh-eLh" secondAttribute="trailing" id="Bxk-mN-FNm"/>
+                                                                <constraint firstItem="3Qh-vh-eLh" firstAttribute="top" secondItem="5WC-o8-YxT" secondAttribute="top" id="YZo-r5-Vcc"/>
+                                                                <constraint firstItem="3Qh-vh-eLh" firstAttribute="leading" secondItem="5WC-o8-YxT" secondAttribute="leading" id="alA-zq-oEP"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Muk-Lm-lUf">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jO9-jX-hdE">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="20.5"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="50" id="OFi-FF-8Nn"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="koG-pr-9XL">
+                                                                    <rect key="frame" x="50" y="0.0" width="325" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="koG-pr-9XL" firstAttribute="centerY" secondItem="Muk-Lm-lUf" secondAttribute="centerY" id="M1x-Re-vDN"/>
+                                                                <constraint firstItem="jO9-jX-hdE" firstAttribute="centerY" secondItem="Muk-Lm-lUf" secondAttribute="centerY" id="YJg-rn-QUf"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="Muk-Lm-lUf" secondAttribute="trailing" id="4dG-f6-LWZ"/>
+                                                        <constraint firstItem="Muk-Lm-lUf" firstAttribute="leading" secondItem="HDn-1Q-0RU" secondAttribute="leading" id="D0M-eO-R7W"/>
+                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="leading" secondItem="HDn-1Q-0RU" secondAttribute="leadingMargin" id="I3g-da-Mkb"/>
+                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="top" secondItem="HDn-1Q-0RU" secondAttribute="topMargin" id="J40-lv-DFL"/>
+                                                        <constraint firstItem="Muk-Lm-lUf" firstAttribute="top" secondItem="HDn-1Q-0RU" secondAttribute="top" id="WAp-Ef-CUd"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="5WC-o8-YxT" secondAttribute="trailing" id="fr9-A9-bbk"/>
+                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="centerX" secondItem="HDn-1Q-0RU" secondAttribute="centerX" id="usD-55-UeR"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="dateLabel" destination="jO9-jX-hdE" id="oCj-k7-AKU"/>
+                                                    <outlet property="datePicker" destination="3Qh-vh-eLh" id="krF-os-N0S"/>
+                                                    <outlet property="datePickerLabel" destination="koG-pr-9XL" id="dfo-sx-0r7"/>
+                                                    <outlet property="datePickerStackView" destination="5WC-o8-YxT" id="6bB-hF-uhP"/>
+                                                    <outlet property="labelStackView" destination="Muk-Lm-lUf" id="06I-x5-4Dp"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="4RC-5T-IlN" secondAttribute="bottom" id="57o-jx-7qp"/>
+                                    <constraint firstItem="4RC-5T-IlN" firstAttribute="centerX" secondItem="cHw-50-v1k" secondAttribute="centerX" id="9HN-HO-00G"/>
+                                    <constraint firstItem="4RC-5T-IlN" firstAttribute="top" secondItem="cHw-50-v1k" secondAttribute="top" id="TTI-XO-ESS"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ox6-n4-NE5" firstAttribute="bottom" secondItem="Y8y-4w-eBW" secondAttribute="bottom" constant="50" id="460-8i-Urc"/>
-                            <constraint firstItem="Y8y-4w-eBW" firstAttribute="top" secondItem="cHw-50-v1k" secondAttribute="bottom" constant="20" id="5ho-Rx-hBK"/>
+                            <constraint firstItem="ox6-n4-NE5" firstAttribute="bottom" secondItem="Y8y-4w-eBW" secondAttribute="bottom" constant="30" id="460-8i-Urc"/>
                             <constraint firstItem="cHw-50-v1k" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" id="7WT-Va-4Ie"/>
                             <constraint firstItem="Q4J-Oo-jUV" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" constant="30" id="ESC-UZ-yrl"/>
                             <constraint firstItem="ox6-n4-NE5" firstAttribute="trailing" secondItem="9um-qA-FxQ" secondAttribute="trailing" constant="20" id="Ezt-Jf-SU7"/>
+                            <constraint firstItem="Y8y-4w-eBW" firstAttribute="top" secondItem="cHw-50-v1k" secondAttribute="bottom" constant="20" id="Kpo-04-v9K"/>
                             <constraint firstItem="e3q-mQ-9d9" firstAttribute="top" secondItem="ox6-n4-NE5" secondAttribute="top" constant="10" id="LVk-b1-0Cy"/>
                             <constraint firstItem="cHw-50-v1k" firstAttribute="top" secondItem="Q4J-Oo-jUV" secondAttribute="bottom" constant="20" id="Yyz-0p-V5t"/>
                             <constraint firstItem="9um-qA-FxQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O26-eT-7Yy" secondAttribute="leading" constant="20" symbolic="YES" id="Z5k-yL-MPH"/>
@@ -255,6 +339,7 @@
                     <connections>
                         <outlet property="gameImageView" destination="BB1-ye-Jap" id="c9n-tS-3kD"/>
                         <outlet property="gameNameLabel" destination="rv6-KV-33F" id="CsI-fE-gDP"/>
+                        <outlet property="playTrackTableView" destination="4RC-5T-IlN" id="pru-IA-Rh3"/>
                         <outlet property="playerCountPickerView" destination="AFD-zJ-sh3" id="kS1-H5-Ckg"/>
                     </connections>
                 </viewController>
@@ -265,7 +350,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1724" y="1026.8365817091455"/>
+            <point key="canvasLocation" x="1744.8" y="1005.2473763118442"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="aaS-ib-0xN">

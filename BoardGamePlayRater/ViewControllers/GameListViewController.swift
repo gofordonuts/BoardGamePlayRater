@@ -40,7 +40,7 @@ class GameListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let game = games[indexPath.row]
     
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myProtoCell") as! GameTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "gameProtoCell") as! GameTableViewCell
         
         cell.gameNameLabel.text = game.name
         cell.gameRatingLabel.backgroundColor = getRatingColor(rating: game.rating)

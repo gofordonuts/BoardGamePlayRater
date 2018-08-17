@@ -8,19 +8,15 @@
 
 import UIKit
 
-class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
     var imagePicker = UIImagePickerController()
-
     var game : Game? = nil
     
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gameImageView: UIImageView!
-    
     @IBOutlet weak var playerCountPickerView: UIPickerView!
-    @IBOutlet weak var playDatePickerView: UIDatePicker!
-    
-
+    @IBOutlet weak var playTrackTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +26,17 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         playerCountPickerView.dataSource = self
         playerCountPickerView.delegate = self
         
+        playTrackTableView.delegate = self
+        playTrackTableView.dataSource = self
+        
+        playTrackTableView.layer.borderWidth = 1.0
+        playTrackTableView.tableFooterView = UIView(frame: CGRect.zero)
+        playTrackTableView.isScrollEnabled = true
+        
         if game != nil {
             gameNameLabel.text = game!.name
-            
            /* playerCountPickerView.numberOfComponents(game!.maxPlayerCount - game!.minPlayerCount
              */
-            
         } else {
             print("game is nil")
         }
@@ -51,10 +52,10 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         
         // Save game play here:
         let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
-        let playDate = playDatePickerView.date
+        // let playDate = playDatePickerView.date
         
         print("Player Count = \(playerCount)")
-        print("Play date = \(playDate)")
+        //print("Play date = \(playDate)")
         
         
         self.dismiss(animated: true) {
@@ -121,8 +122,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
  /*********** PLAYER COUNT PICKER VIEW SETUP **************/
  
     
-    
- /*
+    /*
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel: UILabel? = (view as? UILabel)
         if pickerLabel == nil {
@@ -135,7 +135,8 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         
         return pickerLabel!
     }
- */
+
+    */
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -159,4 +160,38 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
+    
+    // Functions for TableView with date picker and ratings:
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: "dateLabelProtoCell"), for: indexPath) as! DateLabelTableViewCell
+            
+            return cell
+        }
+        
+        let cell = UITableViewCell()
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row == 0) {
+            (playTrackTableView.cellForRow(at: indexPath) as! DateLabelTableViewCell).setDatePickerStackViewHidden()
+            //playTrackTableView.estimatedRowHeight = 60
+            playTrackTableView.rowHeight = UITableViewAutomaticDimension
+            playTrackTableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        playTrackTableView.deselectRow(at: indexPath, animated: true)
+    }
+ 
 }
