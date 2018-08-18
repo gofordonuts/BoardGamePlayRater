@@ -20,6 +20,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var dateButton: UIButton!
     
@@ -32,6 +33,8 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var playerTableView: UITableView!
     @IBOutlet weak var playerTableHeight: NSLayoutConstraint!
     
+    //Parameters for detail view height:
+    let detailViewHeightInitial: CGFloat = 140
     
     // Parameters for hiding and showing date picker:
     var datePickerOpened: Bool = false    // state variable
@@ -44,7 +47,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     
     // Parameters for hiding and showing players table:
     var playerTableOpened: Bool = false    // state variable
-    let playerTableHeightOpened: CGFloat = 214
+    var playerTableHeightOpened: CGFloat!
     let playerTableHeightClosed: CGFloat = 0
     let playerTableMarginTopOpened: CGFloat = 0  // 18 (see below)
     let playerTableMarginTopClosed: CGFloat = 0
@@ -66,6 +69,8 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
             print("game is nil")
         }
 
+        detailViewHeight.constant = detailViewHeightInitial
+        
 /****** Date Picker initialization: ********/
         datePicker.datePickerMode = UIDatePickerMode.date
         dateFormatter = DateFormatter()
@@ -74,6 +79,17 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         datePickerHeight.constant = datePickerHeightClosed
         let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
        
+/****** Player Table View initialization: ********/
+        playerTableView.dataSource  = self
+        playerTableView.delegate = self
+        // Adjust table height to standard UITABLEVIEWCELL height times max number of players:
+        if game != nil {
+            let tableCellHeight = CGFloat((game!.maxPlayerCount))
+            playerTableHeightOpened = 44 * tableCellHeight
+        } else {
+             playerTableHeightOpened = 44
+        }
+        
 /****** Intial setup of Buttons: ******/
         
         // Date button:
@@ -103,21 +119,6 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     
 
 /******** UIViewController Buttons: **********/
-    @IBAction func doneTapped(_ sender: Any) {
-        // Save game play here:
-        let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
-        // let playDate = playDatePickerView.date
-        
-        print("Player Count = \(playerCount)")
-        //print("Play date = \(playDate)")
-        
-        
-        self.dismiss(animated: true) {
-            //dismiss code goes here
-            
-        }
-    }
-    
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true) {
             //dismiss code goes here
@@ -164,8 +165,10 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    
     @IBAction func dateButtonTapped(_ sender: Any) {
+        if (playerTableOpened) {
+            showPlayerTable(show: !playerTableOpened, animateTime: animateTimeZero)
+        }
         if (datePickerOpened) {
             let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
@@ -200,6 +203,21 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
             dateButton.setTitle("Date:      \(initialDate)", for: .normal)
             showDatePicker(show: !datePickerOpened, animateTime: animateTimeZero)
+        }
+    }
+    
+    @IBAction func doneTapped(_ sender: Any) {
+        // Save game play here:
+        let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
+        // let playDate = playDatePickerView.date
+        
+        print("Player Count = \(playerCount)")
+        //print("Play date = \(playDate)")
+        
+        
+        self.dismiss(animated: true) {
+            //dismiss code goes here
+            
         }
     }
     
@@ -273,11 +291,15 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     }
  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        let count : Int16 = (game?.maxPlayerCount)!
+        return Int(count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        let playerNumber = indexPath.row + 1
+        cell.textLabel?.text = "Player \(playerNumber)"
+        return cell
     }
     
 }
