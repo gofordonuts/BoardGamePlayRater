@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -225,121 +224,84 @@
                                     <action selector="cancelTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="9le-GT-3Ha"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Game Play" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3q-mQ-9d9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Track Game Play" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3q-mQ-9d9">
                                 <rect key="frame" x="124" y="30" width="128" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cHw-50-v1k">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DA4-wp-dVl">
                                 <rect key="frame" x="0.0" y="284.5" width="375" height="302.5"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4RC-5T-IlN">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="302.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dateLabelProtoCell" rowHeight="274" id="uJf-0M-PpB" customClass="DateLabelTableViewCell" customModule="BoardGamePlayRater" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="274"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uJf-0M-PpB" id="HDn-1Q-0RU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="273.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5WC-o8-YxT">
-                                                            <rect key="frame" x="15" y="11" width="345" height="216"/>
-                                                            <subviews>
-                                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="3Qh-vh-eLh">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="216"/>
-                                                                    <date key="date" timeIntervalSinceReferenceDate="556050293.21527803">
-                                                                        <!--2018-08-15 18:24:53 +0000-->
-                                                                    </date>
-                                                                </datePicker>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="3Qh-vh-eLh" secondAttribute="bottom" id="4bo-hd-Czx"/>
-                                                                <constraint firstAttribute="trailing" secondItem="3Qh-vh-eLh" secondAttribute="trailing" id="Bxk-mN-FNm"/>
-                                                                <constraint firstItem="3Qh-vh-eLh" firstAttribute="top" secondItem="5WC-o8-YxT" secondAttribute="top" id="YZo-r5-Vcc"/>
-                                                                <constraint firstItem="3Qh-vh-eLh" firstAttribute="leading" secondItem="5WC-o8-YxT" secondAttribute="leading" id="alA-zq-oEP"/>
-                                                            </constraints>
-                                                        </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Muk-Lm-lUf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jO9-jX-hdE">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="20.5"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="50" id="OFi-FF-8Nn"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="koG-pr-9XL">
-                                                                    <rect key="frame" x="50" y="0.0" width="325" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="koG-pr-9XL" firstAttribute="centerY" secondItem="Muk-Lm-lUf" secondAttribute="centerY" id="M1x-Re-vDN"/>
-                                                                <constraint firstItem="jO9-jX-hdE" firstAttribute="centerY" secondItem="Muk-Lm-lUf" secondAttribute="centerY" id="YJg-rn-QUf"/>
-                                                            </constraints>
-                                                        </stackView>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="Muk-Lm-lUf" secondAttribute="trailing" id="4dG-f6-LWZ"/>
-                                                        <constraint firstItem="Muk-Lm-lUf" firstAttribute="leading" secondItem="HDn-1Q-0RU" secondAttribute="leading" id="D0M-eO-R7W"/>
-                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="leading" secondItem="HDn-1Q-0RU" secondAttribute="leadingMargin" id="I3g-da-Mkb"/>
-                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="top" secondItem="HDn-1Q-0RU" secondAttribute="topMargin" id="J40-lv-DFL"/>
-                                                        <constraint firstItem="Muk-Lm-lUf" firstAttribute="top" secondItem="HDn-1Q-0RU" secondAttribute="top" id="WAp-Ef-CUd"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="5WC-o8-YxT" secondAttribute="trailing" id="fr9-A9-bbk"/>
-                                                        <constraint firstItem="5WC-o8-YxT" firstAttribute="centerX" secondItem="HDn-1Q-0RU" secondAttribute="centerX" id="usD-55-UeR"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                                <connections>
-                                                    <outlet property="dateLabel" destination="jO9-jX-hdE" id="oCj-k7-AKU"/>
-                                                    <outlet property="datePicker" destination="3Qh-vh-eLh" id="krF-os-N0S"/>
-                                                    <outlet property="datePickerLabel" destination="koG-pr-9XL" id="dfo-sx-0r7"/>
-                                                    <outlet property="datePickerStackView" destination="5WC-o8-YxT" id="6bB-hF-uhP"/>
-                                                    <outlet property="labelStackView" destination="Muk-Lm-lUf" id="06I-x5-4Dp"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnJ-Sa-Rxw">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="FJf-A6-H92"/>
+                                        </constraints>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dateButtonTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="nmy-oA-JwW"/>
+                                        </connections>
+                                    </button>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-Oq-3ab">
+                                        <rect key="frame" x="0.0" y="40" width="375" height="216"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="216" id="hpz-ig-WMP"/>
+                                        </constraints>
+                                        <date key="date" timeIntervalSinceReferenceDate="556290664.12388802">
+                                            <!--2018-08-18 13:11:04 +0000-->
+                                        </date>
+                                    </datePicker>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vg-wf-rBO">
+                                        <rect key="frame" x="30" y="276" width="49" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="4RC-5T-IlN" secondAttribute="bottom" id="57o-jx-7qp"/>
-                                    <constraint firstItem="4RC-5T-IlN" firstAttribute="centerX" secondItem="cHw-50-v1k" secondAttribute="centerX" id="9HN-HO-00G"/>
-                                    <constraint firstItem="4RC-5T-IlN" firstAttribute="top" secondItem="cHw-50-v1k" secondAttribute="top" id="TTI-XO-ESS"/>
+                                    <constraint firstItem="ofI-Oq-3ab" firstAttribute="top" secondItem="cnJ-Sa-Rxw" secondAttribute="bottom" id="1DS-Ej-2ku"/>
+                                    <constraint firstItem="ofI-Oq-3ab" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" id="7Dg-F4-NqU"/>
+                                    <constraint firstItem="9vg-wf-rBO" firstAttribute="top" secondItem="ofI-Oq-3ab" secondAttribute="bottom" constant="20" id="OPp-qW-WBP"/>
+                                    <constraint firstItem="cnJ-Sa-Rxw" firstAttribute="top" secondItem="DA4-wp-dVl" secondAttribute="top" id="T7Q-H7-zw2"/>
+                                    <constraint firstAttribute="trailing" secondItem="cnJ-Sa-Rxw" secondAttribute="trailing" constant="20" id="YRo-rc-xMc"/>
+                                    <constraint firstItem="9vg-wf-rBO" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="30" id="lVe-af-VhI"/>
+                                    <constraint firstItem="cnJ-Sa-Rxw" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="sgA-P8-C5d"/>
+                                    <constraint firstAttribute="trailing" secondItem="ofI-Oq-3ab" secondAttribute="trailing" id="tzj-PW-590"/>
                                 </constraints>
-                            </stackView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ox6-n4-NE5" firstAttribute="bottom" secondItem="Y8y-4w-eBW" secondAttribute="bottom" constant="30" id="460-8i-Urc"/>
-                            <constraint firstItem="cHw-50-v1k" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" id="7WT-Va-4Ie"/>
+                            <constraint firstItem="ox6-n4-NE5" firstAttribute="trailing" secondItem="DA4-wp-dVl" secondAttribute="trailing" id="BMq-xn-6mJ"/>
                             <constraint firstItem="Q4J-Oo-jUV" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" constant="30" id="ESC-UZ-yrl"/>
                             <constraint firstItem="ox6-n4-NE5" firstAttribute="trailing" secondItem="9um-qA-FxQ" secondAttribute="trailing" constant="20" id="Ezt-Jf-SU7"/>
-                            <constraint firstItem="Y8y-4w-eBW" firstAttribute="top" secondItem="cHw-50-v1k" secondAttribute="bottom" constant="20" id="Kpo-04-v9K"/>
                             <constraint firstItem="e3q-mQ-9d9" firstAttribute="top" secondItem="ox6-n4-NE5" secondAttribute="top" constant="10" id="LVk-b1-0Cy"/>
-                            <constraint firstItem="cHw-50-v1k" firstAttribute="top" secondItem="Q4J-Oo-jUV" secondAttribute="bottom" constant="20" id="Yyz-0p-V5t"/>
+                            <constraint firstItem="DA4-wp-dVl" firstAttribute="top" secondItem="BB1-ye-Jap" secondAttribute="bottom" constant="20" id="PYS-4r-ORl"/>
                             <constraint firstItem="9um-qA-FxQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O26-eT-7Yy" secondAttribute="leading" constant="20" symbolic="YES" id="Z5k-yL-MPH"/>
                             <constraint firstItem="Q4J-Oo-jUV" firstAttribute="top" secondItem="rv6-KV-33F" secondAttribute="bottom" constant="30" id="e41-rk-Q0g"/>
                             <constraint firstItem="rv6-KV-33F" firstAttribute="top" secondItem="e3q-mQ-9d9" secondAttribute="bottom" constant="10" id="i9K-zm-UGa"/>
                             <constraint firstItem="rv6-KV-33F" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="kH1-1U-KA1"/>
-                            <constraint firstItem="ox6-n4-NE5" firstAttribute="trailing" secondItem="cHw-50-v1k" secondAttribute="trailing" id="lIa-Va-d8p"/>
+                            <constraint firstItem="DA4-wp-dVl" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" id="lt4-t6-VkD"/>
                             <constraint firstItem="Y8y-4w-eBW" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="p3p-zy-Dz9"/>
                             <constraint firstItem="e3q-mQ-9d9" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="qqG-6h-Fgh"/>
+                            <constraint firstItem="Y8y-4w-eBW" firstAttribute="top" secondItem="DA4-wp-dVl" secondAttribute="bottom" constant="20" id="rpI-V8-W7b"/>
                             <constraint firstItem="9um-qA-FxQ" firstAttribute="top" secondItem="ox6-n4-NE5" secondAttribute="top" constant="7" id="tFl-7Q-SzZ"/>
                             <constraint firstAttribute="trailing" secondItem="Q4J-Oo-jUV" secondAttribute="trailing" constant="30" id="yu8-A8-2s3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ox6-n4-NE5"/>
                     </view>
                     <connections>
+                        <outlet property="dateButton" destination="cnJ-Sa-Rxw" id="okn-IC-6XZ"/>
+                        <outlet property="datePicker" destination="ofI-Oq-3ab" id="PBL-5k-qFQ"/>
+                        <outlet property="datePickerHeight" destination="hpz-ig-WMP" id="6W3-xH-akh"/>
+                        <outlet property="dateView" destination="DA4-wp-dVl" id="fSB-m3-4Rt"/>
                         <outlet property="gameImageView" destination="BB1-ye-Jap" id="c9n-tS-3kD"/>
                         <outlet property="gameNameLabel" destination="rv6-KV-33F" id="CsI-fE-gDP"/>
-                        <outlet property="playTrackTableView" destination="4RC-5T-IlN" id="pru-IA-Rh3"/>
                         <outlet property="playerCountPickerView" destination="AFD-zJ-sh3" id="kS1-H5-Ckg"/>
                     </connections>
                 </viewController>

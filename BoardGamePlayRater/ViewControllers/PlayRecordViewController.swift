@@ -8,31 +8,40 @@
 
 import UIKit
 
-class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var imagePicker = UIImagePickerController()
+    var dateFormatter : DateFormatter?
     var game : Game? = nil
     
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gameImageView: UIImageView!
     @IBOutlet weak var playerCountPickerView: UIPickerView!
-    @IBOutlet weak var playTrackTableView: UITableView!
+    
+    
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var datePickerHeight: NSLayoutConstraint!
+    
+    // Parameters for hiding and showing date picker:
+    var datePickerOpened: Bool = false    // state variable
+    let datePickerHeightOpened: CGFloat = 214
+    let datePickerHeightClosed: CGFloat = 0
+    let datePickerMarginTopOpened: CGFloat = 0  // 18 (see below)
+    let datePickerMarginTopClosed: CGFloat = 0
+    let animateTimeStd: TimeInterval = 0.5
+    let animateTimeZero: TimeInterval = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+/****** Player Count Picker initialization: *******/
         imagePicker.delegate = self
         playerCountPickerView.dataSource = self
         playerCountPickerView.delegate = self
-        
-        playTrackTableView.delegate = self
-        playTrackTableView.dataSource = self
-        
-        playTrackTableView.layer.borderWidth = 1.0
-        playTrackTableView.tableFooterView = UIView(frame: CGRect.zero)
-        playTrackTableView.isScrollEnabled = true
-        
+
+/****** Load any existing game data to present here: *******/
         if game != nil {
             gameNameLabel.text = game!.name
            /* playerCountPickerView.numberOfComponents(game!.maxPlayerCount - game!.minPlayerCount
@@ -40,16 +49,31 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         } else {
             print("game is nil")
         }
-        gameImageView.isUserInteractionEnabled = true
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+/****** Date Picker initialization: ********/
+        datePicker.datePickerMode = UIDatePickerMode.date
+        dateFormatter = DateFormatter()
+        dateFormatter?.dateFormat = "MMM  dd,   yyyy"
+        datePicker.isHidden = !datePickerOpened
+        datePickerHeight.constant = datePickerHeightClosed
+        let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
+        dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
+        dateButton.setTitle("Date:      \(initialDate)", for: .normal)
+        dateButton.layer.borderWidth = 1.0
+        dateButton.layer.borderColor = UIColor.black.cgColor
+        dateButton.layer.cornerRadius = 8.0
+        
+        
+        
+/****** Allow user interaction: ********/
+        gameImageView.isUserInteractionEnabled = true
+   
+        
     }
     
+
+/******** UIViewController Buttons: **********/
     @IBAction func doneTapped(_ sender: Any) {
-        
         // Save game play here:
         let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
         // let playDate = playDatePickerView.date
@@ -109,35 +133,20 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
      
         }
     }
-     /*
-     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-     
-     
-     self.present(alert, animated: true)
-     imagePicker.sourceType = .photoLibrary
-     
-     present(imagePicker, animated: true, completion: nil)
-     */
-     
- /*********** PLAYER COUNT PICKER VIEW SETUP **************/
- 
     
-    /*
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        var pickerLabel: UILabel? = (view as? UILabel)
-        if pickerLabel == nil {
-            pickerLabel = UILabel()
-            pickerLabel?.font = UIFont(name: "<Your Font Name>", size: <Font Size>)
-            pickerLabel?.textAlignment = .center
+    
+    @IBAction func dateButtonTapped(_ sender: Any) {
+        if (datePickerOpened) {
+            let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
+            dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
+            dateButton.setTitle("Date:      \(initialDate)", for: .normal)
+            showDatePicker(show: !datePickerOpened, animateTime: animateTimeZero)
+        } else {
+            showDatePicker(show: !datePickerOpened, animateTime: animateTimeStd)
         }
-        pickerLabel?.text = <Data Array>[row]
-        pickerLabel?.textColor = UIColor.blue
-        
-        return pickerLabel!
     }
-
-    */
     
+    /*********** PLAYER COUNT PICKER VIEW SETUP **************/
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -150,7 +159,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(game!.minPlayerCount + Int16(row))
     }
-
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -160,38 +169,32 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
+
     
-    // Functions for TableView with date picker and ratings:
+
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+/*********** DATE PICKER WITH LABEL **************/
+    func showDatePicker(show: Bool, animateTime: TimeInterval) {
+        // set state variable
+        datePickerOpened = show
         
-        if (indexPath.row == 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: "dateLabelProtoCell"), for: indexPath) as! DateLabelTableViewCell
-            
-            return cell
-        }
-        
-        let cell = UITableViewCell()
-        return cell
-        
+        // this makes the datePicker disappear from the screen BUT leaves the space still occupied
+        // this is not strictly necessary but it will make the appearance more tidy
+        self.datePicker.isHidden = !show
+
+        // animate the datePicker open/hide - this is the where the constraints are modified
+        UIView.animate(withDuration: animateTime, animations: {
+            // toggle open/close the datePicker
+
+            self.datePickerHeight.constant = (show ? self.datePickerHeightOpened : self.datePickerHeightClosed)
+            //self.datePickerMarginTop.constant = (show ? self.datePickerMarginTopOpened : self.datePickerMarginTopClosed)
+
+            // Update view:
+            self.view.layoutIfNeeded()
+        })
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            (playTrackTableView.cellForRow(at: indexPath) as! DateLabelTableViewCell).setDatePickerStackViewHidden()
-            //playTrackTableView.estimatedRowHeight = 60
-            playTrackTableView.rowHeight = UITableViewAutomaticDimension
-            playTrackTableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-        playTrackTableView.deselectRow(at: indexPath, animated: true)
-    }
+
+
+
  
 }
