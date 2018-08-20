@@ -250,7 +250,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    /*********** PLAYER COUNT PICKER VIEW SETUP **************/
+/*********** PLAYER COUNT PICKER VIEW SETUP **************/
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -263,6 +263,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(game!.minPlayerCount + Int16(row))
     }
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -339,7 +340,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         let count : Int16 = (game?.maxPlayerCount)!
         if (numberOfPlayersAdded < Int(count)) {
             if (indexPath.row == (tableView.numberOfRows(inSection: 0) - 1)) {
-                cell.textLabel?.text = "..."
+                cell.textLabel?.text = "+   "
             } else {
                 let playerNumber = indexPath.row + 1
                 cell.textLabel?.text = "Player \(playerNumber)"
@@ -354,11 +355,12 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView.cellForRow(at: indexPath)?.textLabel?.text == "...") {
-            print("Adding player")
+        if (tableView.cellForRow(at: indexPath)?.textLabel?.text == "+   ") {
+            performSegue(withIdentifier: "PlayerInformationSegue", sender: nil)
         }
-        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
+    
     /*********** RATING VIEW **************/
     func showRatingView(show: Bool, animateTime: TimeInterval) {
         // set state variable
