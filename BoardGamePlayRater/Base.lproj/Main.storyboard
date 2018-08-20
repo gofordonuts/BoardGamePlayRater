@@ -228,15 +228,13 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="FJf-A6-H92"/>
                                         </constraints>
-                                        <state key="normal" title="Date">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
+                                        <state key="normal" title="Date"/>
                                         <connections>
                                             <action selector="dateButtonTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="nmy-oA-JwW"/>
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-Oq-3ab">
-                                        <rect key="frame" x="0.0" y="30" width="375" height="216"/>
+                                        <rect key="frame" x="20" y="30" width="335" height="216"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="216" id="hpz-ig-WMP"/>
                                         </constraints>
@@ -249,50 +247,60 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="qLo-GM-R4C"/>
                                         </constraints>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Player Info"/>
+                                        <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Players Information"/>
                                         <connections>
                                             <action selector="playerInfoButtonTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="Glj-dm-ydV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbh-XR-ZFu">
-                                        <rect key="frame" x="20" y="288" width="335" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="mlc-rr-CGV"/>
-                                        </constraints>
-                                        <state key="normal" title="Rating">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="ratingButtonTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="aNi-L9-45H"/>
-                                        </connections>
-                                    </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gWf-3a-b2u">
-                                        <rect key="frame" x="0.0" y="281" width="375" height="2"/>
+                                        <rect key="frame" x="20" y="280.5" width="335" height="2"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="wMo-JZ-IqM"/>
                                         </constraints>
                                     </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbh-XR-ZFu">
+                                        <rect key="frame" x="20" y="288" width="335" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="mlc-rr-CGV"/>
+                                        </constraints>
+                                        <state key="normal" title="Game Play Rating">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ratingButtonTapped:" destination="45o-Kd-tIo" eventType="touchUpInside" id="aNi-L9-45H"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vD-2i-ifv">
+                                        <rect key="frame" x="20" y="318" width="335" height="0.0"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="fuT-9U-Yi4"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ofI-Oq-3ab" firstAttribute="top" secondItem="cnJ-Sa-Rxw" secondAttribute="bottom" id="1DS-Ej-2ku"/>
                                     <constraint firstItem="bUp-lf-coM" firstAttribute="top" secondItem="ofI-Oq-3ab" secondAttribute="bottom" constant="5" id="502-uk-1Mi"/>
                                     <constraint firstItem="Jbh-XR-ZFu" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="61q-vp-c7o"/>
-                                    <constraint firstItem="ofI-Oq-3ab" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" id="7Dg-F4-NqU"/>
+                                    <constraint firstItem="ofI-Oq-3ab" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="7Dg-F4-NqU"/>
                                     <constraint firstItem="gWf-3a-b2u" firstAttribute="top" secondItem="bUp-lf-coM" secondAttribute="bottom" id="Fmd-BN-ofH"/>
+                                    <constraint firstItem="8vD-2i-ifv" firstAttribute="top" secondItem="Jbh-XR-ZFu" secondAttribute="bottom" id="QdE-a1-crc"/>
                                     <constraint firstItem="cnJ-Sa-Rxw" firstAttribute="top" secondItem="DA4-wp-dVl" secondAttribute="top" id="T7Q-H7-zw2"/>
                                     <constraint firstAttribute="trailing" secondItem="cnJ-Sa-Rxw" secondAttribute="trailing" constant="20" id="YRo-rc-xMc"/>
-                                    <constraint firstAttribute="trailing" secondItem="gWf-3a-b2u" secondAttribute="trailing" id="YV6-aq-a4S"/>
+                                    <constraint firstAttribute="trailing" secondItem="gWf-3a-b2u" secondAttribute="trailing" constant="20" id="YV6-aq-a4S"/>
                                     <constraint firstAttribute="height" constant="353.5" id="oLr-f0-TGN"/>
+                                    <constraint firstAttribute="trailing" secondItem="8vD-2i-ifv" secondAttribute="trailing" constant="20" id="pfd-1C-4L5"/>
                                     <constraint firstItem="bUp-lf-coM" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="r0O-OW-KlO"/>
-                                    <constraint firstItem="gWf-3a-b2u" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" id="rM0-Mi-cBf"/>
+                                    <constraint firstItem="gWf-3a-b2u" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="rM0-Mi-cBf"/>
                                     <constraint firstAttribute="trailing" secondItem="bUp-lf-coM" secondAttribute="trailing" constant="20" id="rQK-PO-D0q"/>
                                     <constraint firstItem="cnJ-Sa-Rxw" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="sgA-P8-C5d"/>
-                                    <constraint firstAttribute="trailing" secondItem="ofI-Oq-3ab" secondAttribute="trailing" id="tzj-PW-590"/>
+                                    <constraint firstAttribute="trailing" secondItem="ofI-Oq-3ab" secondAttribute="trailing" constant="20" id="tzj-PW-590"/>
                                     <constraint firstItem="Jbh-XR-ZFu" firstAttribute="top" secondItem="gWf-3a-b2u" secondAttribute="bottom" constant="5" id="uOQ-1r-rUJ"/>
                                     <constraint firstAttribute="trailing" secondItem="Jbh-XR-ZFu" secondAttribute="trailing" constant="20" id="yYI-1q-ydV"/>
+                                    <constraint firstItem="8vD-2i-ifv" firstAttribute="leading" secondItem="DA4-wp-dVl" secondAttribute="leading" constant="20" id="zsm-Nq-TEc"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8y-4w-eBW">
@@ -313,12 +321,12 @@
                             <constraint firstItem="Q4J-Oo-jUV" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" constant="30" id="ESC-UZ-yrl"/>
                             <constraint firstItem="ox6-n4-NE5" firstAttribute="trailing" secondItem="9um-qA-FxQ" secondAttribute="trailing" constant="20" id="Ezt-Jf-SU7"/>
                             <constraint firstItem="e3q-mQ-9d9" firstAttribute="top" secondItem="ox6-n4-NE5" secondAttribute="top" constant="10" id="LVk-b1-0Cy"/>
-                            <constraint firstItem="DA4-wp-dVl" firstAttribute="top" secondItem="BB1-ye-Jap" secondAttribute="bottom" constant="20" id="PYS-4r-ORl"/>
                             <constraint firstItem="9um-qA-FxQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O26-eT-7Yy" secondAttribute="leading" constant="20" symbolic="YES" id="Z5k-yL-MPH"/>
                             <constraint firstItem="Q4J-Oo-jUV" firstAttribute="top" secondItem="rv6-KV-33F" secondAttribute="bottom" constant="30" id="e41-rk-Q0g"/>
                             <constraint firstItem="rv6-KV-33F" firstAttribute="top" secondItem="e3q-mQ-9d9" secondAttribute="bottom" constant="10" id="i9K-zm-UGa"/>
                             <constraint firstItem="rv6-KV-33F" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="kH1-1U-KA1"/>
                             <constraint firstItem="DA4-wp-dVl" firstAttribute="leading" secondItem="ox6-n4-NE5" secondAttribute="leading" id="lt4-t6-VkD"/>
+                            <constraint firstItem="DA4-wp-dVl" firstAttribute="top" secondItem="Q4J-Oo-jUV" secondAttribute="bottom" constant="20" id="o9W-EZ-FjQ"/>
                             <constraint firstItem="Y8y-4w-eBW" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="p3p-zy-Dz9"/>
                             <constraint firstItem="e3q-mQ-9d9" firstAttribute="centerX" secondItem="O26-eT-7Yy" secondAttribute="centerX" id="qqG-6h-Fgh"/>
                             <constraint firstItem="9um-qA-FxQ" firstAttribute="top" secondItem="ox6-n4-NE5" secondAttribute="top" constant="7" id="tFl-7Q-SzZ"/>
@@ -332,6 +340,7 @@
                         <outlet property="datePickerHeight" destination="hpz-ig-WMP" id="6W3-xH-akh"/>
                         <outlet property="detailView" destination="DA4-wp-dVl" id="c8C-us-EMb"/>
                         <outlet property="detailViewHeight" destination="oLr-f0-TGN" id="f33-s1-Bzl"/>
+                        <outlet property="doneButton" destination="Y8y-4w-eBW" id="yGf-dn-ggf"/>
                         <outlet property="gameImageView" destination="BB1-ye-Jap" id="c9n-tS-3kD"/>
                         <outlet property="gameNameLabel" destination="rv6-KV-33F" id="CsI-fE-gDP"/>
                         <outlet property="playerCountPickerView" destination="AFD-zJ-sh3" id="kS1-H5-Ckg"/>
@@ -339,6 +348,8 @@
                         <outlet property="playerTableHeight" destination="wMo-JZ-IqM" id="8kt-Pa-Foa"/>
                         <outlet property="playerTableView" destination="gWf-3a-b2u" id="glv-r1-afk"/>
                         <outlet property="ratingButton" destination="Jbh-XR-ZFu" id="N41-sE-ZZc"/>
+                        <outlet property="ratingView" destination="8vD-2i-ifv" id="yMv-9y-9Tg"/>
+                        <outlet property="ratingViewHeight" destination="fuT-9U-Yi4" id="aB0-E0-fnL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7cP-wz-Suz" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -33,12 +33,17 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var playerTableView: UITableView!
     @IBOutlet weak var playerTableHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var ratingView: UIView!
+    @IBOutlet weak var ratingViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var doneButton: UIButton!
+    
     //Parameters for detail view height:
-    let detailViewHeightInitial: CGFloat = 140
+    //let detailViewHeightInitial: CGFloat = 140
     
     // Parameters for hiding and showing date picker:
     var datePickerOpened: Bool = false    // state variable
-    let datePickerHeightOpened: CGFloat = 214
+    var datePickerHeightOpened: CGFloat!
     let datePickerHeightClosed: CGFloat = 0
     let datePickerMarginTopOpened: CGFloat = 0  // 18 (see below)
     let datePickerMarginTopClosed: CGFloat = 0
@@ -51,6 +56,15 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     let playerTableHeightClosed: CGFloat = 0
     let playerTableMarginTopOpened: CGFloat = 0  // 18 (see below)
     let playerTableMarginTopClosed: CGFloat = 0
+    
+    var numberOfPlayersAdded : Int = 0
+    
+    // Parameters for hiding and showing rating view:
+    var ratingViewOpened: Bool = false    // state variable
+    var ratingViewHeightOpened: CGFloat!
+    let ratingViewHeightClosed: CGFloat = 0
+    let ratingViewMarginTopOpened: CGFloat = 0  // 18 (see below)
+    let ratingViewMarginTopClosed: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,8 +82,8 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         } else {
             print("game is nil")
         }
-
-        detailViewHeight.constant = detailViewHeightInitial
+        
+        detailViewHeight.constant = 100.0
         
 /****** Date Picker initialization: ********/
         datePicker.datePickerMode = UIDatePickerMode.date
@@ -82,42 +96,48 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
 /****** Player Table View initialization: ********/
         playerTableView.dataSource  = self
         playerTableView.delegate = self
-        // Adjust table height to standard UITABLEVIEWCELL height times max number of players:
-        if game != nil {
-            let tableCellHeight = CGFloat((game!.maxPlayerCount))
-            playerTableHeightOpened = 44 * tableCellHeight
-        } else {
-             playerTableHeightOpened = 44
-        }
+        playerTableView.isHidden = !playerTableOpened
+        playerTableHeight.constant = playerTableHeightClosed
+      
+/****** Rating View initialization: ********/
+        ratingView.isHidden = !ratingViewOpened
+        ratingViewHeight.constant = ratingViewHeightClosed
         
 /****** Intial setup of Buttons: ******/
         
         // Date button:
-        dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
+        dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         dateButton.setTitle("Date:      \(initialDate)", for: .normal)
         dateButton.layer.borderWidth = 1.0
-        dateButton.layer.borderColor = UIColor.black.cgColor
+        dateButton.layer.borderColor = UIColor.blue.cgColor
         dateButton.layer.cornerRadius = 8.0
         
         // Player Information button:
         playerInfoButton.layer.borderWidth = 1.0
-        playerInfoButton.layer.borderColor = UIColor.black.cgColor
+        playerInfoButton.layer.borderColor = UIColor.blue.cgColor
         playerInfoButton.layer.cornerRadius = 8.0
-        playerInfoButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
+        playerInfoButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         
         // Rating button:
         ratingButton.layer.borderWidth = 1.0
-        ratingButton.layer.borderColor = UIColor.black.cgColor
+        ratingButton.layer.borderColor = UIColor.blue.cgColor
         ratingButton.layer.cornerRadius = 8.0
-        ratingButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
-        
+        ratingButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
+        ratingView.layer.borderWidth = 1.0 
 /****** Allow user interaction: ********/
         gameImageView.isUserInteractionEnabled = true
    
         
     }
     
-
+    override func viewDidLayoutSubviews() {
+        // set space to expand AFTER device arranges the subviews to accommodate screen size
+        let emptySpaceToExpand = doneButton.frame.origin.y - (detailView.frame.origin.y + 110.0)
+        datePickerHeightOpened = emptySpaceToExpand
+        playerTableHeightOpened = emptySpaceToExpand
+        ratingViewHeightOpened = emptySpaceToExpand
+    }
+    
 /******** UIViewController Buttons: **********/
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true) {
@@ -166,6 +186,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func dateButtonTapped(_ sender: Any) {
+        // first close other submenus if open
         if (playerTableOpened) {
             showPlayerTable(show: !playerTableOpened, animateTime: animateTimeZero)
         }
@@ -179,9 +200,8 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    
     @IBAction func playerInfoButtonTapped(_ sender: Any) {
-        // first close date picker if open
+        // first close other submenus if open
         if (datePickerOpened) {
             let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
@@ -197,12 +217,21 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func ratingButtonTapped(_ sender: Any) {
-        // first close date picker if open
+        // first close other subviews if open
         if (datePickerOpened) {
             let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
             dateButton.setTitle("Date:      \(initialDate)", for: .normal)
             showDatePicker(show: !datePickerOpened, animateTime: animateTimeZero)
+        }
+        if (playerTableOpened) {
+            showPlayerTable(show: !playerTableOpened, animateTime: animateTimeZero)
+        }
+        // Display rating view:
+        if (ratingViewOpened) {
+            showRatingView(show: !ratingViewOpened, animateTime: animateTimeZero)
+        } else {
+            showRatingView(show: !ratingViewOpened, animateTime: animateTimeZero)
         }
     }
     
@@ -235,7 +264,6 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         return String(game!.minPlayerCount + Int16(row))
     }
     
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         gameImageView.image = image
@@ -256,11 +284,11 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         // this makes the datePicker disappear from the screen BUT leaves the space still occupied
         // this is not strictly necessary but it will make the appearance more tidy
         self.datePicker.isHidden = !show
-
+        
         // animate the datePicker open/hide - this is the where the constraints are modified
         UIView.animate(withDuration: animateTime, animations: {
             // toggle open/close the datePicker
-
+            self.detailViewHeight.constant = (show ? (100.0 + self.datePickerHeightOpened) : 100.0)
             self.datePickerHeight.constant = (show ? self.datePickerHeightOpened : self.datePickerHeightClosed)
             //self.datePickerMarginTop.constant = (show ? self.datePickerMarginTopOpened : self.datePickerMarginTopClosed)
 
@@ -281,7 +309,7 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         // animate the datePicker open/hide - this is the where the constraints are modified
         UIView.animate(withDuration: animateTime, animations: {
             // toggle open/close the datePicker
-            
+            self.detailViewHeight.constant = (show ? (100.0 + self.playerTableHeightOpened) : 100.0)
             self.playerTableHeight.constant = (show ? self.playerTableHeightOpened : self.playerTableHeightClosed)
             //self.datePickerMarginTop.constant = (show ? self.datePickerMarginTopOpened : self.datePickerMarginTopClosed)
             
@@ -289,17 +317,62 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
             self.view.layoutIfNeeded()
         })
     }
- 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count : Int16 = (game?.maxPlayerCount)!
-        return Int(count)
+        var numOfRows = 0
+        if (numberOfPlayersAdded == 0) {
+            numOfRows = 1
+        } else {
+            let count : Int16 = (game?.maxPlayerCount)!
+            if (numberOfPlayersAdded < Int(count)) {
+                numOfRows = numberOfPlayersAdded + 1
+            } else {
+                numOfRows = Int(count)
+            }
+        }
+        
+        return numOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let playerNumber = indexPath.row + 1
-        cell.textLabel?.text = "Player \(playerNumber)"
+        let count : Int16 = (game?.maxPlayerCount)!
+        if (numberOfPlayersAdded < Int(count)) {
+            if (indexPath.row == (tableView.numberOfRows(inSection: 0) - 1)) {
+                cell.textLabel?.text = "..."
+            } else {
+                let playerNumber = indexPath.row + 1
+                cell.textLabel?.text = "Player \(playerNumber)"
+            }
+        } else {
+            // Need to get player info here:
+            let playerNumber = indexPath.row + 1
+            cell.textLabel?.text = "Player \(playerNumber)"
+        }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView.cellForRow(at: indexPath)?.textLabel?.text == "...") {
+            print("Adding player")
+        }
+        
+    }
+    /*********** RATING VIEW **************/
+    func showRatingView(show: Bool, animateTime: TimeInterval) {
+        // set state variable
+        ratingViewOpened = show
+        
+        self.ratingView.isHidden = !show
+        UIView.animate(withDuration: animateTime, animations: {
+            // toggle open/close the rating UIView
+            self.ratingViewHeight.constant = (show ? (100.0 + self.ratingViewHeightOpened) : 100.0)
+            self.ratingViewHeight.constant = (show ? self.playerTableHeightOpened : self.ratingViewHeightClosed)
+            
+            // Update view:
+            self.view.layoutIfNeeded()
+        })
     }
     
 }
