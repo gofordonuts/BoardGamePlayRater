@@ -109,18 +109,18 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         dateButton.setTitle("Date:      \(initialDate)", for: .normal)
         dateButton.layer.borderWidth = 1.0
-        dateButton.layer.borderColor = UIColor.blue.cgColor
+        dateButton.layer.borderColor = UIColor.black.cgColor
         dateButton.layer.cornerRadius = 8.0
         
         // Player Information button:
         playerInfoButton.layer.borderWidth = 1.0
-        playerInfoButton.layer.borderColor = UIColor.blue.cgColor
+        playerInfoButton.layer.borderColor = UIColor.black.cgColor
         playerInfoButton.layer.cornerRadius = 8.0
         playerInfoButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         
         // Rating button:
         ratingButton.layer.borderWidth = 1.0
-        ratingButton.layer.borderColor = UIColor.blue.cgColor
+        ratingButton.layer.borderColor = UIColor.black.cgColor
         ratingButton.layer.cornerRadius = 8.0
         ratingButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0)
         ratingView.layer.borderWidth = 1.0 
@@ -179,6 +179,10 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
                     self.present(alert, animated: true)
                 }
             }))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
+                // Alert action for selecting Photo Library to obtain photo:
+                alert.dismiss(animated: true, completion: nil)
+            }))
      
             self.present(alert, animated: true, completion: nil)
      
@@ -190,6 +194,10 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         if (playerTableOpened) {
             showPlayerTable(show: !playerTableOpened, animateTime: animateTimeZero)
         }
+        if (ratingViewOpened) {
+            showRatingView(show: !ratingViewOpened, animateTime: animateTimeZero)
+        }
+        // Add picker functionality:
         if (datePickerOpened) {
             let initialDate = dateFormatter?.string(from: datePicker.date) ?? "N/A"
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
@@ -207,6 +215,9 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
             dateButton.titleLabel?.font = UIFont.systemFont(ofSize: 20.0)
             dateButton.setTitle("Date:      \(initialDate)", for: .normal)
             showDatePicker(show: !datePickerOpened, animateTime: animateTimeZero)
+        }
+        if (ratingViewOpened) {
+            showRatingView(show: !ratingViewOpened, animateTime: animateTimeZero)
         }
         // Display list of players
         if (playerTableOpened) {
@@ -354,11 +365,32 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "PlayerInformationSegue") {
+            let nextVC = segue.destination as! PlayerInformationViewController
+            nextVC.game = game
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView.cellForRow(at: indexPath)?.textLabel?.text == "+   ") {
-            performSegue(withIdentifier: "PlayerInformationSegue", sender: nil)
+            performSegue(withIdentifier: "PlayerInformationSegue", sender: game)
+            
         }
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+ 
+    
+    /********** SEGUE TRANSITION FOR PLAYER INFORMATION VIEW ***********/
+    @IBAction func prepareForeUnwind (segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBAction func unwindToPlayerRecordViewController(_ sender: UIStoryboardSegue) {
+        // Use data from the view controller which initiated the unwind segue
+        let segue = UnwindScaleSegue(identifier: sender.identifier, source: sender.source, destination: sender.destination)
+        segue.perform()
     }
     
     /*********** RATING VIEW **************/

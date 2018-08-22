@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class GameViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var gameImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -17,7 +17,7 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var titleStackView: UIStackView!
     @IBOutlet weak var countStackView: UIStackView!
     @IBOutlet weak var initialRatingStackView: UIStackView!
-    @IBOutlet weak var initialRatingLabel: UITextField!
+    @IBOutlet weak var initialRatingTextField: UITextField!
     
     var imagePicker = UIImagePickerController()
     var game : Game? = nil
@@ -38,6 +38,20 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         countStackView.isLayoutMarginsRelativeArrangement = true
         initialRatingStackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         initialRatingStackView.isLayoutMarginsRelativeArrangement = true
+        
+        nameTextField.delegate = self
+        initialRatingTextField.delegate = self
+        minPlayerCountTextField.delegate = self
+        maxPlayerCountTextField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: Notification.Name("initialRatingTextFieldShowKeyboard"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: Notification.Name("initialRatingTextFieldHideKeyboard"), object: nil)
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    
+       // NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWillHide(sender:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         
         if game != nil {
             nameTextField.text = game!.name
@@ -84,6 +98,10 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self.present(alert, animated: true)
                 }
+            }))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
+                // Alert action for selecting Photo Library to obtain photo:
+                alert.dismiss(animated: true, completion: nil)
             }))
             
             self.present(alert, animated: true, completion: nil)
@@ -136,8 +154,19 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     game.image = nil
                 }
                 
-                if initialRatingLabel.text != "Not required..." {
-                    game.rating = 5.0
+                if initialRatingTextField.text != "Not required..." {
+                    game.rating = 11.0
+                    print("we are here")
+                } else {
+                    let userRatingVal = Double(initialRatingTextField.text!.trimmingCharacters(in: .whitespaces))
+                    print("USer val ===== \(String(describing: userRatingVal))")
+                    let minVal : Double = 0.0
+                    let maxVal : Double = 10.0
+                    if  (minVal.isLessThanOrEqualTo(userRatingVal!)) && (userRatingVal!.isLessThanOrEqualTo(maxVal)) {
+                        game.rating = userRatingVal!
+                    } else {
+                        game.rating = 11.0
+                    }
                 }
             
             } else {
@@ -167,4 +196,68 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imagePicker.dismiss(animated: true, completion: nil)
     }
 
+/************** TEXTFIELD AND KEYBOARD FUNCTIONS *************/
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == initialRatingTextField) {
+            NotificationCenter.default.post(name: Notification.Name("initialRatingTextFieldShowKeyboard"), object: nil)
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if (textField == initialRatingTextField) {
+            NotificationCenter.default.post(name: Notification.Name("initialRatingTextFieldHideKeyboard"), object: nil)
+        }
+    }
+    
+    //Textfield delegates
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (textField == initialRatingTextField) {
+            switch string {
+            case "0","1","2","3","4","5","6","7","8","9":
+                return true
+            case ".":
+                let array = Array(textField.text!)
+                var decimalCount = 0
+                for character in array {
+                    if character == "." {
+                        decimalCount = decimalCount + 1
+                    }
+                }
+                
+                if decimalCount == 1 {
+                    return false
+                } else {
+                    return true
+                }
+            default:
+                let array = Array(string)
+                if array.count == 0 {
+                    return true
+                }
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+        print("Entered ##############")
+        self.view.frame.origin.y = self.view.frame.origin.y - 50 // Move view 150 points upward
+    }
+    
+    @objc func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y = 0 // Move view to original position
+    }
+    
 }

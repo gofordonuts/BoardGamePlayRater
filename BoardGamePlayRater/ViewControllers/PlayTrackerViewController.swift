@@ -117,11 +117,7 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         
         navigationController?.popViewController(animated: true)
     }
-    /*
-    @IBAction func trackGamePlayButtonTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: "TrackPlaySegue", sender: game)
-    }
-    */
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TrackPlaySegue" {
             
@@ -133,6 +129,7 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
     /*
     // MARK: - Navigation
 
+     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
