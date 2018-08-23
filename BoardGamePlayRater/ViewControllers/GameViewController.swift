@@ -154,7 +154,7 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     game.image = nil
                 }
                 
-                if initialRatingTextField.text != "Not required..." {
+                if (initialRatingTextField.text?.isEmpty)! {
                     game.rating = 11.0
                     print("we are here")
                 } else {
@@ -252,7 +252,6 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @objc func keyboardWillShow(sender: NSNotification) {
-        print("Entered ##############")
         self.view.frame.origin.y = self.view.frame.origin.y - 50 // Move view 150 points upward
     }
     
