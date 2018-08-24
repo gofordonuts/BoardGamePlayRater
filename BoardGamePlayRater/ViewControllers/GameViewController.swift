@@ -125,67 +125,97 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             // Update old game
             game!.name = nameTextField.text
         } else {
-            // Create new game
-            //trimmingCharacters(in: .whitespaces)
-            if !(nameTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
-                
-                // creates context for core data storing:
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                
-                let game = Game(context: context)
-                
-                // Save input data to game context here:
-                game.name = nameTextField.text
-                game.rating = 11.0
-                if !(minPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
-                    game.minPlayerCount = Int16(minPlayerCountTextField.text!)!
-                } else {
-                    game.minPlayerCount = 1
-                }
-                
-                if !(maxPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
-                    game.maxPlayerCount = Int16(maxPlayerCountTextField.text!)!
-                } else {
-                    game.maxPlayerCount = 100
-                }
-                if imageSetByUser {
-                    game.image = UIImagePNGRepresentation(gameImageView.image!)
-                } else {
-                    game.image = nil
-                }
-                
-                if (initialRatingTextField.text?.isEmpty)! {
-                    game.rating = 11.0
-                    print("we are here")
-                } else {
-                    let userRatingVal = Double(initialRatingTextField.text!.trimmingCharacters(in: .whitespaces))
-                    print("USer val ===== \(String(describing: userRatingVal))")
-                    let minVal : Double = 0.0
-                    let maxVal : Double = 10.0
-                    if  (minVal.isLessThanOrEqualTo(userRatingVal!)) && (userRatingVal!.isLessThanOrEqualTo(maxVal)) {
-                        game.rating = userRatingVal!
-                    } else {
-                        game.rating = 11.0
-                    }
-                }
+            // Create new game but first check user has entered values:
+            let nameInputIsEmpty = (nameTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)!
+            let minPlayerInputIsEmpty =  (minPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)!
+            let maxPlayerInputIsEmpty = (maxPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)!
             
-            } else {
-                
-                // If user has not provided board game name, present alert:
-                
+            if nameInputIsEmpty {
+                // If user has not provided board game name, present alert and cancel save:
                 let alert = UIAlertController(title: "Missing Information!", message: "Must provide a name for the board game before saving", preferredStyle: .alert)
-                
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                
                 self.present(alert, animated: true)
+            } else if minPlayerInputIsEmpty || maxPlayerInputIsEmpty {
+                // Check to see if user has input player counts and show alerts if not:
+
+                // If user has not entered one or both player counts, present alert:
+                var titleText = ""
+                var messageText = ""
+                if minPlayerInputIsEmpty && maxPlayerInputIsEmpty {
+                    titleText = "Continue without setting Player Count values?"
+                    messageText = "If no values are provided, default will be set to 1 - 100 players"
+                } else if minPlayerInputIsEmpty {
+                    titleText = "Continue without setting minimum Player Count?"
+                    messageText = "If no value is provided, default minimum count will be set to 1 player"
+                } else if maxPlayerInputIsEmpty{
+                    titleText = "Continue without setting maximum Player Count?"
+                    messageText = "If no value is provided, default maximum count will be set to 100 players"
+                } else {
+                    titleText = "ERROR!!!"
+                    messageText = "Try again, and if still not working, contact developer"
+                }
+                
+                let playerCountAlert = UIAlertController(title: titleText, message: messageText, preferredStyle: .alert)
+                    
+                playerCountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                playerCountAlert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { _ in
+                    // creates context for core data storing:
+                    self.saveContextInCoreData()
+                }))
+                self.present(playerCountAlert, animated: true)
+                    
+            } else {
+                // If user has entered name and both player count values, continue to save Core Data:
+                self.saveContextInCoreData()
             }
-            
+        }
+    }
+    
+    func saveContextInCoreData() {
+        // Saves data to CoreData and pops UIViewController
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        let game = Game(context: context)
+        
+        // Save input data to game context here:
+        game.name = nameTextField.text
+        game.rating = 11.0
+        if !(minPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            game.minPlayerCount = Int16(minPlayerCountTextField.text!)!
+        } else {
+            game.minPlayerCount = 1
+        }
+        
+        if !(maxPlayerCountTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            game.maxPlayerCount = Int16(maxPlayerCountTextField.text!)!
+        } else {
+            game.maxPlayerCount = 100
+        }
+        if self.imageSetByUser {
+            game.image = UIImagePNGRepresentation(gameImageView.image!)
+        } else {
+            game.image = nil
+        }
+        
+        if (initialRatingTextField.text?.isEmpty)! {
+            game.rating = 11.0
+            print("we are here")
+        } else {
+            let userRatingVal = Double(initialRatingTextField.text!.trimmingCharacters(in: .whitespaces))
+            print("USer val ===== \(String(describing: userRatingVal))")
+            let minVal : Double = 0.0
+            let maxVal : Double = 10.0
+            if  (minVal.isLessThanOrEqualTo(userRatingVal!)) && (userRatingVal!.isLessThanOrEqualTo(maxVal)) {
+                game.rating = userRatingVal!
+            } else {
+                game.rating = 11.0
+            }
         }
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         navigationController!.popViewController(animated: true)
     }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage

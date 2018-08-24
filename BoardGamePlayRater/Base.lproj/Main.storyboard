@@ -124,6 +124,22 @@
                                     <segue destination="45o-Kd-tIo" kind="presentation" identifier="TrackPlaySegue" id="DJk-gp-REF"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5RC-ZU-Rlm" customClass="GraphView" customModule="BoardGamePlayRater" customModuleProvider="target">
+                                <rect key="frame" x="36.5" y="308" width="302.5" height="255"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Players for Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEr-T7-jds">
+                                <rect key="frame" x="107.5" y="562.5" width="160" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBc-Uc-Sx3">
+                                <rect key="frame" x="0.0" y="429" width="36.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -132,13 +148,21 @@
                             <constraint firstItem="ZmK-6W-L1n" firstAttribute="top" secondItem="xi1-03-jx7" secondAttribute="top" id="62A-Fv-0ap"/>
                             <constraint firstItem="hOi-x9-JM9" firstAttribute="height" secondItem="rrK-wq-VtA" secondAttribute="height" multiplier="0.08" id="8Kq-Xo-IXu"/>
                             <constraint firstItem="xi1-03-jx7" firstAttribute="trailing" secondItem="ei2-po-Lrx" secondAttribute="trailing" constant="30" id="9WR-Ce-UUg"/>
+                            <constraint firstItem="wEr-T7-jds" firstAttribute="centerX" secondItem="rrK-wq-VtA" secondAttribute="centerX" id="BC8-JO-ryu"/>
                             <constraint firstItem="ei2-po-Lrx" firstAttribute="centerX" secondItem="rrK-wq-VtA" secondAttribute="centerX" id="FVm-Aw-suj"/>
                             <constraint firstItem="7BZ-Vk-6na" firstAttribute="centerX" secondItem="rrK-wq-VtA" secondAttribute="centerX" id="IGL-cR-qMr"/>
+                            <constraint firstItem="yBc-Uc-Sx3" firstAttribute="centerY" secondItem="5RC-ZU-Rlm" secondAttribute="centerY" id="Kfa-ZS-XEV"/>
+                            <constraint firstAttribute="trailing" secondItem="5RC-ZU-Rlm" secondAttribute="trailing" constant="36" id="MR5-ZJ-oIM"/>
                             <constraint firstItem="hOi-x9-JM9" firstAttribute="width" secondItem="rrK-wq-VtA" secondAttribute="width" multiplier="0.3" id="VPh-Bf-GSH"/>
+                            <constraint firstItem="5RC-ZU-Rlm" firstAttribute="leading" secondItem="yBc-Uc-Sx3" secondAttribute="trailing" id="Vd1-9e-uId"/>
                             <constraint firstItem="hOi-x9-JM9" firstAttribute="top" secondItem="ZmK-6W-L1n" secondAttribute="bottom" constant="-20" id="WF5-OD-BXk"/>
+                            <constraint firstItem="5RC-ZU-Rlm" firstAttribute="top" secondItem="hOi-x9-JM9" secondAttribute="bottom" constant="10" id="aK0-an-CEV"/>
                             <constraint firstItem="ei2-po-Lrx" firstAttribute="leading" secondItem="xi1-03-jx7" secondAttribute="leading" constant="30" id="eeq-Tt-DqD"/>
+                            <constraint firstItem="yBc-Uc-Sx3" firstAttribute="leading" secondItem="xi1-03-jx7" secondAttribute="leading" id="gON-3c-f0O"/>
                             <constraint firstItem="xi1-03-jx7" firstAttribute="bottom" secondItem="ei2-po-Lrx" secondAttribute="bottom" constant="30" id="gaD-wL-ksu"/>
                             <constraint firstItem="xi1-03-jx7" firstAttribute="trailing" secondItem="hOi-x9-JM9" secondAttribute="trailing" constant="20" id="gfL-8m-y7d"/>
+                            <constraint firstItem="ei2-po-Lrx" firstAttribute="top" secondItem="wEr-T7-jds" secondAttribute="bottom" constant="30" id="hdr-Cp-mvW"/>
+                            <constraint firstItem="wEr-T7-jds" firstAttribute="top" secondItem="5RC-ZU-Rlm" secondAttribute="bottom" id="jbi-Qa-Urm"/>
                             <constraint firstItem="ZmK-6W-L1n" firstAttribute="height" secondItem="rrK-wq-VtA" secondAttribute="height" multiplier="0.3" id="laL-W5-D3q"/>
                             <constraint firstItem="ZmK-6W-L1n" firstAttribute="leading" secondItem="xi1-03-jx7" secondAttribute="leading" id="tmM-BG-BDv"/>
                         </constraints>
@@ -151,6 +175,9 @@
                         <outlet property="deleteButton" destination="7BZ-Vk-6na" id="Shk-9c-N8Q"/>
                         <outlet property="gameImageView" destination="ZmK-6W-L1n" id="Ieg-fp-mop"/>
                         <outlet property="gameRatingLabel" destination="hOi-x9-JM9" id="pvu-jj-O4m"/>
+                        <outlet property="graph" destination="5RC-ZU-Rlm" id="IaD-2x-sTP"/>
+                        <outlet property="playerAxisLabel" destination="wEr-T7-jds" id="uej-dD-h6C"/>
+                        <outlet property="ratingAxisLabel" destination="yBc-Uc-Sx3" id="Day-Qf-IKF"/>
                         <outlet property="trackGamePlayButton" destination="ei2-po-Lrx" id="eWI-PT-LwC"/>
                     </connections>
                 </viewController>

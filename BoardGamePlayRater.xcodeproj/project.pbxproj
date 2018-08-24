@@ -18,6 +18,7 @@
 		8319D9952123900700259B2B /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8319D9942123900700259B2B /* GameTableViewCell.swift */; };
 		831B23E3212C492D006A56A8 /* playerSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B23E2212C492D006A56A8 /* playerSegue.swift */; };
 		833BED7A212B695F000A594E /* PlayerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833BED79212B695F000A594E /* PlayerInformationViewController.swift */; };
+		83853CCB212F5B2700F9E6B3 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83853CCA212F5B2700F9E6B3 /* GraphView.swift */; };
 		83C2B24E210B4F9F00A28D89 /* addSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C2B24D210B4F9E00A28D89 /* addSign.png */; };
 		83C5F0ED210E71090024A572 /* PlayRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F0EC210E71090024A572 /* PlayRecordViewController.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		8319D9942123900700259B2B /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 		831B23E2212C492D006A56A8 /* playerSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playerSegue.swift; sourceTree = "<group>"; };
 		833BED79212B695F000A594E /* PlayerInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInformationViewController.swift; sourceTree = "<group>"; };
+		83853CCA212F5B2700F9E6B3 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		83C2B24D210B4F9E00A28D89 /* addSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addSign.png; sourceTree = "<group>"; };
 		83C5F0EC210E71090024A572 /* PlayRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayRecordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				8315D3DD2104B99C004322A3 /* PlayTrackerViewController.swift */,
 				83C5F0EC210E71090024A572 /* PlayRecordViewController.swift */,
 				833BED79212B695F000A594E /* PlayerInformationViewController.swift */,
+				83853CCA212F5B2700F9E6B3 /* GraphView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				83052A642102484700010ED2 /* GameViewController.swift in Sources */,
 				83C5F0ED210E71090024A572 /* PlayRecordViewController.swift in Sources */,
 				831B23E3212C492D006A56A8 /* playerSegue.swift in Sources */,
+				83853CCB212F5B2700F9E6B3 /* GraphView.swift in Sources */,
 				833BED7A212B695F000A594E /* PlayerInformationViewController.swift in Sources */,
 				83052A4F21023A2000010ED2 /* GameListViewController.swift in Sources */,
 				83052A5521023A2000010ED2 /* BoardGamePlayRater.xcdatamodeld in Sources */,

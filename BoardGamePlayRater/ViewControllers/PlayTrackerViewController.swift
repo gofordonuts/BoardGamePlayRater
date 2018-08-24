@@ -15,6 +15,11 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var gameRatingLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var trackGamePlayButton: UIButton!
+    @IBOutlet weak var graph: GraphView!
+    
+    @IBOutlet weak var ratingAxisLabel: UILabel!
+    
+    @IBOutlet weak var playerAxisLabel: UILabel!
     
     var imagePicker = UIImagePickerController()
     var game : Game? = nil
@@ -30,6 +35,8 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
         trackGamePlayButton.layer.borderWidth = 1.0
         trackGamePlayButton.layer.borderColor = UIColor.blue.cgColor
         trackGamePlayButton.layer.cornerRadius = 8.0
+        
+        ratingAxisLabel.transform = CGAffineTransform( rotationAngle: CGFloat(( -90 * Double.pi ) / 180) )
         
         self.navigationItem.rightBarButtonItem = editButtonItem
         
@@ -65,7 +72,46 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
             gameRatingLabel.backgroundColor = UIColor.lightGray
         }
     }
+    
+/********* GRAPH CODE HERE: ***********/
+    override func viewDidAppear(_ animated: Bool) {
+        let dataEntries = generateDataEntries()
+        graph.dataEntries = dataEntries
+    }
+    
+    func generateDataEntries() -> [BarElement] {
+        let color = UIColor(red:1.0, green:0.75, blue:0.0, alpha:1.0)
+        var result: [BarElement] = []
+        
+        // Determine possible number of players: 
+        let maxPlayerCount : Int16 = (game?.maxPlayerCount)!
+        let minPlayerCount : Int16 = (game?.minPlayerCount)!
+        var barCount = Int(maxPlayerCount) - Int(minPlayerCount) + 1
+        var limitToTen = false
+        if barCount > 10 {
+            limitToTen = true
+            barCount = 10
+        }
+        
+        // For each possible # of players for the current game, add a bar
+        for i in 0..<barCount {
+            
+            let value = 10 // ******************* REPLACE WITH VALUE FROM EACH PLAYER CATEGORY
+            
+            
+            let height: Float = Float(value) / 10.0
+            let currentBarPlayerCount = Int(minPlayerCount) + i
+            if (i == barCount - 1) && (limitToTen) {
+                result.append(BarElement(color: color, height: height, textValue: "\(value)", title: "\(currentBarPlayerCount)+"))
+            } else {
+               result.append(BarElement(color: color, height: height, textValue: "\(value)", title: "\(currentBarPlayerCount)"))
+            }
+            
+        }
+        return result
+    }
 
+/******** OTHER GUI CODE HERE: ************/
     func getRatingColor(rating : Double) -> UIColor {
         var color : UIColor
         if  rating >= 0.0 && rating < 1.0 {
@@ -103,10 +149,16 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
             // user just tapped the Edit button (it now says Done)
             deleteButton.isHidden = false
             trackGamePlayButton.isHidden = true
+            ratingAxisLabel.isHidden = true
+            playerAxisLabel.isHidden = true
+            graph.isHidden = true
         } else {
             // user just tapped the Done button (it now says Edit)
             deleteButton.isHidden = true
             trackGamePlayButton.isHidden = false
+            ratingAxisLabel.isHidden = false
+            playerAxisLabel.isHidden = false
+            graph.isHidden = false
         }
     }
     
