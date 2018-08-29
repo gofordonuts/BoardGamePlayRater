@@ -249,7 +249,28 @@ class PlayRecordViewController: UIViewController, UIImagePickerControllerDelegat
     @IBAction func doneTapped(_ sender: Any) {
         // Save game play here:
         let playerCount = Int16(playerCountPickerView.selectedRow(inComponent: 0)) + (game?.minPlayerCount)!
-        // let playDate = playDatePickerView.date
+        let playDate = datePicker.date
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        let match = Matches(context: context)
+        
+        match.gameName = game?.name
+        match.playerCount = playerCount
+        match.rating = 0.0
+        match.date = playDate
+        
+        game?.addToMatches(match)
+        // Determine ratingValue to closest Double value:
+        var ratingVal = Double(round(1000 * ((game?.rating)! + 6.0) / 2.0) / 1000)
+        if ratingVal > 10.0 {
+            ratingVal = 10.0
+        } else if ratingVal < 0 {
+            ratingVal = 0
+        }
+        game?.rating = ratingVal
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         print("Player Count = \(playerCount)")
         //print("Play date = \(playDate)")

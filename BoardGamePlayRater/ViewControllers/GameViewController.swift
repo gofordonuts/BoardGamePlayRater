@@ -212,7 +212,14 @@ class GameViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 game.rating = 11.0
             }
         }
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
+        if game.minPlayerCount > game.maxPlayerCount {
+            let countAlert = UIAlertController(title: "Player Count not possible!", message: "Maximum player count must be greater than or equal to minimum player count", preferredStyle: .alert)
+            countAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(countAlert, animated: true)
+        } else {
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        }
         
         navigationController!.popViewController(animated: true)
     }

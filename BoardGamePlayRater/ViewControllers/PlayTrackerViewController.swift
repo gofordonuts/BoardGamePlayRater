@@ -77,6 +77,25 @@ class PlayTrackerViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidAppear(_ animated: Bool) {
         let dataEntries = generateDataEntries()
         graph.dataEntries = dataEntries
+        print("YAODHA")
+        if game != nil {
+            // Reload interface data here:
+            let colorValue = getRatingColor(rating: game!.rating)
+            gameRatingLabel.backgroundColor = colorValue
+            gameImageView.backgroundColor = colorValue.withAlphaComponent(0.5)
+            // ratingColor(rating: game!.rating)
+            
+            
+            if game!.rating <= 10.0 {
+                gameRatingLabel.text = String(game!.rating)
+            } else {
+                gameRatingLabel.text = "N/A"
+            }
+            
+        } else {
+            gameRatingLabel.text = "N/A"
+            gameRatingLabel.backgroundColor = UIColor.lightGray
+        }
     }
     
     func generateDataEntries() -> [BarElement] {
